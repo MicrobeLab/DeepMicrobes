@@ -13,7 +13,7 @@ DeepMicrobes relies on the following Python modules:
 #### Clone
 To start working with the code:
 
-    git clone https://github.com/liangqiaoxing/DeepMicrobes.git
+    git clone https://github.com/MicrobeLab/DeepMicrobes.git
     
 ## Usage
 
@@ -67,4 +67,4 @@ To visualize the attention score of the ${INDEX}th sequence in ${SEQ_FASTA}:
                                   
 ## Contact
 
-Any issues with the DeepMicrobes framework can be filed with [GitHub issue tracker](https://github.com/liangqiaoxing/DeepMicrobes/issues).
+Any issues with the DeepMicrobes framework can be filed with [GitHub issue tracker](https://github.com/MicrobeLab/DeepMicrobes/issues).
