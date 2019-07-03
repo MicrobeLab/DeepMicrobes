@@ -1,0 +1,1 @@
+Pre-trained wights for DeepMicrobes can be downloaded [here](https://mail2sysueducn-my.sharepoint.com/:f:/g/personal/liangqx7_mail2_sysu_edu_cn/EiuGf5V5Rb1Hi_xg0A3GXSQBPu7-xkJcoQpy7E4lbpQeGw?e=ZhW0OU).
