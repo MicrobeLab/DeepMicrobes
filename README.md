@@ -1,5 +1,5 @@
 # DeepMicrobes
-DeepMicrobes: a deep learning architecture for taxonomic classification of shotgun metagenomic reads
+DeepMicrobes: taxonomic classification for metagenomics with deep learning
 
 ## Installation
 
