@@ -23,13 +23,13 @@ To start working with the code:
                            --lr=${LEARNING_RATE} --lr_decay=${LEARNING_RATE_DECAY} \
                            --num_classes=${NUM_CLASSES} --keep_prob=${KEEP_PROB} \
                            --input_tfrec=${TFRECORD} --model_dir=/path/to/weights \
-                           --running_mode=train
+                           --running_mode=train --model_name=attention
                            
 #### Evaluation
 
     python DeepMicrobes.py --batch_size=${BATCH_SIZE} --num_classes=${NUM_CLASSES} \
                            --input_tfrec=${TFRECORD} --model_dir=/path/to/weights \
-                           --running_mode=eval
+                           --running_mode=eval --model_name=attention
                            
 
 #### Prediction
@@ -40,7 +40,7 @@ For paired-end data:
                            --input_tfrec=${TFRECORD} --model_dir=/path/to/weights \
                            --label_file=/path/to/label2taxid.txt --translate=True \
                            --pred_out=/path/to/pred_out_prefix \
-                           --running_mode=predict_paired_class
+                           --running_mode=predict_paired_class --model_name=attention
 
 For single-end data:
 
@@ -48,7 +48,7 @@ For single-end data:
                            --input_tfrec=${TFRECORD} --model_dir=/path/to/weights \
                            --label_file=/path/to/label2taxid.txt --translate=True \
                            --pred_out=/path/to/pred_out_prefix \
-                           --running_mode=predict_single_class
+                           --running_mode=predict_single_class --model_name=attention
                            
 #### Report
                            
