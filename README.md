@@ -54,7 +54,8 @@ For single-end data:
                            
 To summarize read-level predictions into a community report:
 
-    paste pred_out_prefix.category_[paired/single].txt pred_out_prefix.prob_[paired/single].txt > ${PREDICT_RESULT}
+    paste [prefix].category_[paired/single].txt [prefix].prob_[paired/single].txt > ${PREDICT_RESULT}
+    
     python community_profile.py -i=${PREDICT_RESULT} -o=${SAMPLE_OUTPUT} \
                                 -t=/path/to/name2taxid.txt
                                 
