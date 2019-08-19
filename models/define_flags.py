@@ -51,7 +51,7 @@ def universal_flags():
             'Learning rate.'))
 
     flags.DEFINE_float(
-        name='lr_decay', default=0.01,
+        name='lr_decay', default=0.05,
         help=flags_core.help_wrap(
             'Learning rate decay.'))
 
