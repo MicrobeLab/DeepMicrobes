@@ -1,0 +1,21 @@
+[input]
+kmer: 12
+vocab_size: 8390657
+
+[output]
+num_classes: 3640
+
+[network]
+embedding_dim: 100
+mlp_dim: 3000
+lstm_dim: 300
+row: 30
+da: 350
+
+[train]
+keep_prob: 1.0
+lr: 0.001
+lr_decay: 0.05
+cpus: 8
+batch_size: 2048
+train_epochs: 1
