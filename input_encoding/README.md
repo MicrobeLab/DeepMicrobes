@@ -25,9 +25,13 @@
 The vocabulary file of merged 12-mers can be downloaded [here](https://mail2sysueducn-my.sharepoint.com/:f:/g/personal/liangqx7_mail2_sysu_edu_cn/EoMaqt1sNbZHl9kFj84WvnsBT4dPFN_Yddkm0bo87Fms8g?e=KLgguV). 
 
 
+
+
 ## Before test set conversion
 
 Taking the average of two softmax probabilities of reverse complement sequences could improve performance. For paired-end data we suggest users take the average of four softmax probabilities. The averaging process is automatically carried out by DeepMicrobes. To this end, an interleaved fasta (or fastq) file should be provided to the scripts above. Interleaved data could be generated using [seqtk](https://github.com/lh3/seqtk/releases).
+
+Note: Please set the batch size as a multiple of two (single-end data) or four (paired-end data) for prediction.
 
 ### Single-end data
 
