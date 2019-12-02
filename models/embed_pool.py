@@ -24,6 +24,7 @@ class EmbedPool(object):
         max_pool = tf.nn.max_pool(inputs, [1, self.kernel_size, 1, 1], [1, 1, 1, 1], 'VALID')
         inputs = tf.concat([avg_pool, max_pool], 1)
         inputs = tf.squeeze(inputs)
+        #bias_init = tf.constant_initializer(0.001, dtype=tf.float32)
 
         with tf.variable_scope("layer_ReLU_1"):
             inputs = tf.reshape(inputs, shape=[-1, self.embedding_dim * 2])
@@ -45,6 +46,17 @@ class EmbedPool(object):
                                        initializer=initializer)
             b_output = tf.Variable(tf.constant(0.0, shape=[self.num_classes]))
             logits = tf.nn.xw_plus_b(inputs, w_output, b_output)
+        #inputs = layers.fully_connected(inputs, num_outputs=self.mlp_dim,
+                                        #activation_fn=tf.nn.relu,
+                                        #biases_initializer=bias_init,
+                                        #scope='mlp_1', reuse=None)
+        #inputs = layers.fully_connected(inputs, num_outputs=self.mlp_dim,
+                                        #activation_fn=tf.nn.relu,
+                                        #biases_initializer=bias_init,
+                                        #scope='mlp_2', reuse=None)
+        #logits = layers.linear(inputs, num_outputs=self.num_classes,
+                               #biases_initializer=bias_init,
+                               #scope='output_logits', reuse=None)
 
         return logits
 

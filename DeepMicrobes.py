@@ -13,7 +13,8 @@ from models import embed_pool, embed_cnn, cnn_lstm, resnet_cnn, \
     embed_lstm, embed_lstm_attention, seq2species
 
 from models.input_pipeline import input_function_train_kmer, input_function_train_one_hot, \
-    input_function_predict_kmer, input_function_predict_one_hot
+    input_function_predict_kmer, input_function_predict_one_hot, \
+    input_function_train_kmer_pad_to_fixed_len, input_function_predict_kmer_pad_to_fixed_len
 
 from models.define_flags import universal_flags, model_specific_flags_embed_cnn, \
     model_specific_flags_embed_lstm, flags_of_mode
@@ -55,14 +56,14 @@ def config(model_name, params):
                                          kmer=params['kmer'],
                                          max_len=params['max_len'])
     elif model_name == 'embed_lstm':
-        model = embed_lstm_pool.EmbedLSTM(num_classes=params['num_classes'],
-                                          vocab_size=params['vocab_size'],
-                                          embedding_dim=params['embedding_dim'],
-                                          mlp_dim=params['mlp_dim'],
-                                          lstm_dim=params['lstm_dim'],
-                                          pooling_type=params['pooling_type'],
-                                          kmer=params['kmer'],
-                                          max_len=params['max_len'])
+        model = embed_lstm.EmbedLSTM(num_classes=params['num_classes'],
+                                     vocab_size=params['vocab_size'],
+                                     embedding_dim=params['embedding_dim'],
+                                     mlp_dim=params['mlp_dim'],
+                                     lstm_dim=params['lstm_dim'],
+                                     pooling_type=params['pooling_type'],
+                                     kmer=params['kmer'],
+                                     max_len=params['max_len'])
     elif model_name == 'cnn_lstm':
         model = cnn_lstm.ConvLSTM(num_classes=params['num_classes'],
                                   max_len=params['max_len'])
@@ -152,7 +153,7 @@ def model_fn(features, labels, mode, params):
 
 
 def train(flags_obj, model_function, dataset_name):
-    run_config = tf.estimator.RunConfig(save_checkpoints_steps=50000, keep_checkpoint_max=1000)
+    run_config = tf.estimator.RunConfig(save_checkpoints_steps=100000, keep_checkpoint_max=1000)
 
     classifier = tf.estimator.Estimator(
         model_fn=model_function, model_dir=flags_obj.model_dir, config=run_config,
@@ -192,11 +193,18 @@ def train(flags_obj, model_function, dataset_name):
                 flags_obj.train_epochs, flags_obj.batch_size,
                 flags_obj.cpus
             )
+            if flags_obj.model_name in ['embed_pool', 'embed_cnn', 'embed_lstm',
+                                        'embed_cnn_no_pool']:
+                input_fn = input_function_train_kmer_pad_to_fixed_len(
+                    flags_obj.input_tfrec,
+                    flags_obj.train_epochs, flags_obj.batch_size,
+                    flags_obj.cpus, flags_obj.max_len, flags_obj.kmer
+                )
         else:
             input_fn = input_function_train_one_hot(
                 flags_obj.input_tfrec,
                 flags_obj.train_epochs, flags_obj.batch_size,
-                flags_obj.cpus
+                flags_obj.cpus, flags_obj.max_len
             )
 
         return input_fn
@@ -233,11 +241,18 @@ def evaluate(flags_obj, model_function):
                 1, flags_obj.batch_size,
                 flags_obj.cpus
             )
+            if flags_obj.model_name in ['embed_pool', 'embed_cnn', 'embed_lstm',
+                                        'embed_cnn_no_pool']:
+                input_fn = input_function_train_kmer_pad_to_fixed_len(
+                    flags_obj.input_tfrec,
+                    1, flags_obj.batch_size,
+                    flags_obj.cpus, flags_obj.max_len, flags_obj.kmer
+                )
         else:
             input_fn = input_function_train_one_hot(
                 flags_obj.input_tfrec,
                 1, flags_obj.batch_size,
-                flags_obj.cpus
+                flags_obj.cpus, flags_obj.max_len
             )
 
         return input_fn
@@ -274,11 +289,21 @@ def predict(flags_obj, model_function):
                 flags_obj.batch_size,
                 flags_obj.cpus
             )
+            if flags_obj.model_name in ['embed_pool', 'embed_cnn', 'embed_lstm',
+                                        'embed_cnn_no_pool']:
+                input_fn = input_function_predict_kmer_pad_to_fixed_len(
+                    flags_obj.input_tfrec,
+                    flags_obj.batch_size,
+                    flags_obj.cpus,
+                    flags_obj.max_len,
+                    flags_obj.kmer
+                )
         else:
             input_fn = input_function_predict_one_hot(
                 flags_obj.input_tfrec,
                 flags_obj.batch_size,
-                flags_obj.cpus
+                flags_obj.cpus,
+                flags_obj.max_len
             )
         return input_fn
 

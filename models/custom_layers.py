@@ -16,8 +16,6 @@ def embedding_layer(inputs, vocab_size, embedding_dim, initializer):
 
 def bidirectional_lstm(inputs, lstm_dim, length_list, batch_size, initializer):
     """Computes the hidden state of bidirectional lstm."""
-    # Modified from implementation by Diego Antognini available at:
-    # https://github.com/Diego999/SelfSent
     lstm_cell = {}
     initial_state = {}
 
@@ -64,9 +62,16 @@ def batch_stat(inputs):
     return length_list, length_max, batch_size
 
 
+def batch_stat_for_kmer_encoding(inputs):
+    used = tf.sign(inputs)
+    length = tf.reduce_sum(used, 1)
+    length_list = tf.cast(length, tf.int32)
+    length_max = tf.reduce_max(length_list)
+    batch_size = tf.shape(inputs)[0]
+    return length_list, length_max, batch_size
+
+
 def dense_block(input_layer, num_filters_per_size_i, cnn_filter_size_i, num_rep_block_i):
-    # Modified from implementation by Hoa T. Le available at:
-    # https://github.com/lethienhoa/Very-Deep-Convolutional-Networks-for-Natural-Language-Processing
     nodes = []
     a = slim.conv2d(input_layer, num_filters_per_size_i, [1, cnn_filter_size_i],
                     weights_initializer=tf.contrib.layers.variance_scaling_initializer(
@@ -93,7 +98,7 @@ def attention_layer(inputs, lstm_dim, da, row, length_max, initializer):
     ws2 = tf.get_variable("ws2", shape=[da, row], initializer=initializer)
     intermediate_inputs_1 = tf.matmul(intermediate_inputs_1, ws2)
     intermediate_inputs_1 = tf.nn.softmax(tf.reshape(
-        intermediate_inputs_1, shape=[-1, length_max, row]), dim=1)
+        intermediate_inputs_1, shape=[-1, length_max, row]), axis=1)
 
     intermediate_inputs_2 = tf.transpose(inputs, perm=[0, 2, 1])
     inputs = tf.matmul(intermediate_inputs_2, intermediate_inputs_1)

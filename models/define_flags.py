@@ -11,12 +11,12 @@ def universal_flags():
     flags_core.define_base()
 
     flags.DEFINE_integer(
-        name='num_classes', default=3640,
+        name='num_classes', default=2505,
         help=flags_core.help_wrap(
             'Number of species to classify.'))
 
     flags.DEFINE_integer(
-        name='vocab_size', default=8390657,
+        name='vocab_size', default=8390658,
         help=flags_core.help_wrap(
             'Number of k-mers in the vocabulary.'))
 
@@ -31,7 +31,7 @@ def universal_flags():
             'Dimension of MLP.'))
 
     flags.DEFINE_integer(
-        name='max_len', default=100,
+        name='max_len', default=150,
         help=flags_core.help_wrap(
             'Max length of sequences.'))
 
@@ -66,7 +66,7 @@ def universal_flags():
             'Filename of training set.'))
 
     flags.DEFINE_string(
-        name='model_name', default='embed_pool',
+        name='model_name', default='attention',
         help=flags_core.help_wrap(
             'Choose a model.'))
 

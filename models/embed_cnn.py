@@ -25,8 +25,6 @@ class EmbedCNN(object):
         inputs = tf.expand_dims(inputs, axis=-1)
 
         # Create a convolution + max-pool layer for each filter size
-        # Modified from implementation by Denny Britz available at:
-        # https://github.com/dennybritz/cnn-text-classification-tf
         pooled_outputs = []
         for i, filter_size in enumerate(self.cnn_filter_sizes):
             with tf.name_scope("conv-maxpool-%s" % filter_size):

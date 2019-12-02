@@ -4,13 +4,14 @@ from __future__ import print_function
 
 
 import tensorflow as tf
-from models.custom_layers import batch_stat, embedding_layer, bidirectional_lstm
+from models.custom_layers import batch_stat_for_kmer_encoding, \
+    embedding_layer, bidirectional_lstm
 
 
 class EmbedLSTM(object):
     def __init__(self, num_classes, lstm_dim, mlp_dim,
                  vocab_size, embedding_dim, kmer, max_len,
-                 pooling_type='concat'):
+                 pooling_type='none'):
         self.num_classes = num_classes
         self.lstm_dim = lstm_dim
         self.mlp_dim = mlp_dim
@@ -22,11 +23,11 @@ class EmbedLSTM(object):
     def __call__(self, inputs):
         initializer = tf.contrib.layers.xavier_initializer()
 
+        length_list, length_max, batch_size = batch_stat_for_kmer_encoding(inputs)
+
         with tf.variable_scope("token_embedding"):
             inputs = embedding_layer(inputs, self.vocab_size,
                                      self.embedding_dim, initializer)
-
-        length_list, length_max, batch_size = batch_stat(inputs)
 
         with tf.variable_scope("token_lstm"):
             inputs = bidirectional_lstm(inputs, self.lstm_dim, length_list,

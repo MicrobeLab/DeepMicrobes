@@ -21,8 +21,7 @@ class DeepCNN(object):
         self.num_rep_block = num_rep_block
 
     def __call__(self, inputs):
-		# Modified from implementation by Hoa T. Le available at:
-    	# https://github.com/lethienhoa/Very-Deep-Convolutional-Networks-for-Natural-Language-Processing
+
         inputs = tf.reshape(inputs, [-1, 4, self.max_len, 1])
 
         inputs = slim.conv2d(inputs=inputs,
