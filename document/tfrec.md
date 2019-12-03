@@ -18,22 +18,25 @@ The following steps are required to process the sequences in training sets befor
 <b>To convert fasta to TFRecord for training:</b>
 
 ```sh
-tfrec_train_kmer.sh -i train.fa -v /path/to/vocab/tokens_merged_12mers.txt -d /path/to/DeepMicrobes/scripts -o output_dir -s 20480000 -k 12
+tfrec_train_kmer.sh -i train.fa -v /path/to/vocab/tokens_merged_12mers.txt -d /path/to/DeepMicrobes/scripts -o train.tfrec -s 20480000 -k 12
 ```
 
 Arguments: <br>
 `-i` Fasta file of training set <br>
 `-v` Absolute path to the vocabulary file (path/to/vocab/tokens_merged_12mers.txt) <br>
 `-d` Absolute path of directory containing scripts (/path/to/DeepMicrobes/scripts) <br>
-`-o` (Optional) Output dictionary containing converted TFRecord (default: tfrec) <br>
+`-o` Output name of converted TFRecord <br>
 `-s` (Optional) Number of sequences per file for splitting (default: 20480000) <br>
-`-k` (Optional) k-mer length (default: 12)
+`-k` (Optional) <i>k</i>-mer length (default: 12)
 
-The converted TFRecord will be stored in `output_dir/train.tfrec`. <br>
-<b>NOTE</b>: The script parses category labels from sequence IDs which should be start with `prefix|label` (e.g., >this_is_prefix|0). 
-Suppose we 100 categories, we should assign a non-redundant integer label between 0-99 to each category.
-The label is taken as ground truth during training and not required during prediction.
-Each subset files are processed with one CPU core, so that the optimal number of sequences per file depends on how many CPU cores you have and the total number of reads as well. 
+The converted TFRecord will be stored in `train.tfrec` (or other specified names) in the current dictionary. <br>
+<br>
+<b>NOTE</b>: 
+* The script parses category labels from sequence IDs starting with `prefix|label` (e.g., >this_is_prefix|0).  <br>
+* Suppose we 100 categories, we should assign a non-redundant integer label between 0-99 to each category. <br>
+* The label is taken as ground truth during training and not required during prediction. <br>
+* Each subset files are processed with one CPU core, so that the optimal number of sequences per file depends on how many CPU cores you have and the total number of reads as well. <br>
+* The vocabulary file and <i>k</i>-mer length should be matched.
 
 <br>
 
@@ -52,18 +55,57 @@ The following steps are required to process the sequences in test sets before lo
 <b>To convert fastq/fasta to TFRecord for prediction:</b>
 
 ```sh
-tfrec_prediction_kmer.sh -f prediction_R1.fastq -r prediction_R2.fastq -t fastq -v /path/to/vocab/tokens_merged_12mers.txt -d /path/to/DeepMicrobes/scripts -o output_dir -s 4000000 -k 12
+tfrec_predict_kmer.sh -f sample_R1.fastq -r sample_R2.fastq -t fastq -v /path/to/vocab/tokens_merged_12mers.txt -d /path/to/DeepMicrobes/scripts -o sample.tfrec -s 4000000 -k 12
+```
+
+Arguments: <br>
+`-f` Fastq/fasta file of forward reads <br>
+`-r` Fastq/fasta file of reverse reads <br>
+`-v` Absolute path to the vocabulary file (path/to/vocab/tokens_merged_12mers.txt) <br>
+`-d` Absolute path of directory containing scripts (/path/to/DeepMicrobes/scripts) <br>
+`-o` Output name of converted TFRecord <br>
+`-s` (Optional) Number of sequences per file for splitting (default: 4000000) <br>
+`-k` (Optional) k-mer length (default: 12) <br>
+`-t` (Optional) Sequence type fastq/fasta (default: fastq)
+
+The converted TFRecord will be stored in `sample.tfrec` (or other specified names) in the current dictionary. <br>
+<br>
+<b>NOTE</b>: 
+* Each subset files are processed with one CPU core, so that the optimal number of sequences per file depends on how many CPU cores you have and the total number of reads as well. <br>
+* The vocabulary file and <i>k</i>-mer length should be matched.
+* The number of sequences per file must be a multiple of 4 (complementary reads of R1 and R2).
+
+<br>
+
+
+## One-hot encoding
+
+We also provide wrapper scripts of one-hot encoding for users who would like to play with the other tested DNNs. 
+
+### Training set (one-hot)
+
+```sh
+tfrec_train_onehot.sh -i train.fa -d /path/to/DeepMicrobes/scripts -o train.tfrec -s 20480000 
 ```
 
 Arguments: <br>
 `-i` Fasta file of training set <br>
-`-v` Absolute path to the vocabulary file (path/to/vocab/tokens_merged_12mers.txt) <br>
 `-d` Absolute path of directory containing scripts (/path/to/DeepMicrobes/scripts) <br>
-`-o` (Optional) Output dictionary containing converted TFRecord (default: tfrec) <br>
+`-o` Output name of converted TFRecord <br>
 `-s` (Optional) Number of sequences per file for splitting (default: 20480000) <br>
-`-k` (Optional) k-mer length (default: 12)
 
 
+### Test set (one-hot)
 
+```sh
+tfrec_predict_onehot.sh -f sample_R1.fastq -r sample_R2.fastq -t fastq -d /path/to/DeepMicrobes/scripts -o sample.tfrec -s 4000000 
+```
 
+Arguments: <br>
+`-f` Fastq/fasta file of forward reads <br>
+`-r` Fastq/fasta file of reverse reads <br>
+`-d` Absolute path of directory containing scripts (/path/to/DeepMicrobes/scripts) <br>
+`-o` Output name of converted TFRecord <br>
+`-s` (Optional) Number of sequences per file for splitting (default: 4000000) <br>
+`-t` (Optional) Sequence type fastq/fasta (default: fastq)
 
