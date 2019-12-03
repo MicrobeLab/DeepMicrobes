@@ -6,14 +6,15 @@ Supplementary data for the paper under preparation is available at https://githu
 
 ## Usage
 
+* [Getting start with DeepMicrobes (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/example.md)
 * [How to install](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/install.md)
-* [How to convert fastq/fasta sequences to TFRecord](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/tfrec.md)
-* [How to make predictions on a metagenome dataset](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/prediction.md)
-* [How to generate taxonomic profiles](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/profile.md)
-* [How to choose the confidence threshold](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/confidence.md)
-* [How to train the DNN model of DeepMicrobes (and other tested architectures)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/train.md)
-* [How to submit to GPUs](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/train.md)
-* [Suggestions on training a custom model (for advanced users)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/custom.md)
+* [How to convert fastq/fasta sequences to TFRecord (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/tfrec.md)
+* [How to make predictions on a metagenome dataset (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/prediction.md)
+* [How to generate taxonomic profiles (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/profile.md)
+* [How to choose the confidence threshold (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/confidence.md)
+* [How to train the DNN model of DeepMicrobes (and other tested architectures) (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/train.md)
+* [How to submit to GPUs (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/train.md)
+* [Suggestions on training a custom model (for advanced users) (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/custom.md)
 
 
 

@@ -120,6 +120,18 @@ gunzip tokens_merged_8mers.txt.gz
 
 The vocabulary file can be stored in any dictionary (hereafter referred to as `/path/to/vocab/`). 
 
+<br>
+
+## 6. Add wrapper scripts to path
+
+The `pipelines` dictionary contains wrapper scripts for TFRecord conversion, model training, and classification. 
+
+```sh
+cd /path/to/DeepMicrobes/pipelines
+chmod u+x *
+
+export PATH=/path/to/DeepMicrobes/pipelines:$PATH
+```
 
 
 
