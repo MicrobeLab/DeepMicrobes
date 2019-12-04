@@ -11,10 +11,9 @@ python /path/to/DeepMicrobes.py --helpfull
 The shell scripts used to make predictions with all tested DNNs in the paper can be found in [pipelines](https://github.com/MicrobeLab/DeepMicrobes/tree/master/pipelines). 
 In these scripts we use the `--model_name` option to tell `DeepMicrobes.py` which DNN architecture we would like to use. <br>
 
-<br>
-
 <b>The final best DNN:</b>
-* `attention`: Embed + LSTM + Attention (DeepMicrobes) <br>
+* `attention`: Embed + LSTM + Attention (DeepMicrobes)
+
 <b>Other tested DNNs:</b>
 * `deep_cnn`: ResNet-like CNN
 * `cnn_lstm`: CNN + LSTM
@@ -22,8 +21,6 @@ In these scripts we use the `--model_name` option to tell `DeepMicrobes.py` whic
 * `embed_pool`: Embed + Pool
 * `embed_cnn`: Embed + CNN
 * `embed_lstm`: Embed + LSTM
-
-<br>
 
 ## Classifying reads using DeepMicrobes
 
@@ -34,10 +31,10 @@ predict_deepmicrobes.sh -i sample.tfrec -b ${batch_size} -l ${level} -p ${cpus} 
 
 Arguments: <br>
 * `-i` TFRecord input containing interleaved paired-end reads <br>
-* `-m` The dictionary containing model weights, should match the taxonomic level <br>
-* `-o` Prefix of output file <br>
-* `-b` (Optional) Batch size, should be a multiple of 4 (default: 8192) <br>
-* `-l` (Optional) Taxonomic level, species/genus, should match the weights (default: species) <br>
+* `-m` The dictionary containing model weights (should match the taxonomic level) <br>
+* `-o` Output prefix <br>
+* `-b` (Optional) Batch size (a multiple of 4) (default: 8192) <br>
+* `-l` (Optional) Taxonomic level, species/genus (should match the weights) (default: species) <br>
 * `-p` (Optional) Number of parallel calls for input preparation (default: 8) <br>
 
 
