@@ -55,7 +55,7 @@ The following steps are required to process the sequences in test sets before lo
 <b>To convert fastq/fasta to TFRecord for prediction:</b>
 
 ```sh
-tfrec_predict_kmer.sh -f sample_R1.fastq -r sample_R2.fastq -t fastq -v /path/to/vocab/tokens_merged_12mers.txt -d /path/to/DeepMicrobes/scripts -o sample.tfrec -s 4000000 -k 12
+tfrec_predict_kmer.sh -f sample_R1.fastq -r sample_R2.fastq -t fastq -v /path/to/vocab/tokens_merged_12mers.txt -d /path/to/DeepMicrobes/scripts -o sample_name -s 4000000 -k 12
 ```
 
 Arguments: <br>
@@ -63,7 +63,7 @@ Arguments: <br>
 `-r` Fastq/fasta file of reverse reads <br>
 `-v` Absolute path to the vocabulary file (path/to/vocab/tokens_merged_12mers.txt) <br>
 `-d` Absolute path of directory containing scripts (/path/to/DeepMicrobes/scripts) <br>
-`-o` Output name of converted TFRecord <br>
+`-o` Output name prefix <br>
 `-s` (Optional) Number of sequences per file for splitting (default: 4000000) <br>
 `-k` (Optional) k-mer length (default: 12) <br>
 `-t` (Optional) Sequence type fastq/fasta (default: fastq)
@@ -98,14 +98,14 @@ Arguments: <br>
 ### Test set (one-hot)
 
 ```sh
-tfrec_predict_onehot.sh -f sample_R1.fastq -r sample_R2.fastq -t fastq -d /path/to/DeepMicrobes/scripts -o sample.tfrec -s 4000000 
+tfrec_predict_onehot.sh -f sample_R1.fastq -r sample_R2.fastq -t fastq -d /path/to/DeepMicrobes/scripts -o sample_name -s 4000000 
 ```
 
 Arguments: <br>
 `-f` Fastq/fasta file of forward reads <br>
 `-r` Fastq/fasta file of reverse reads <br>
 `-d` Absolute path of directory containing scripts (/path/to/DeepMicrobes/scripts) <br>
-`-o` Output name of converted TFRecord <br>
+`-o` Output name prefix <br>
 `-s` (Optional) Number of sequences per file for splitting (default: 4000000) <br>
 `-t` (Optional) Sequence type fastq/fasta (default: fastq)
 

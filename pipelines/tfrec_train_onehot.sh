@@ -5,38 +5,30 @@ usage()
 cat << EOF
 usage: $0 options
 
-This script takes as input fasta sequences for training and returns converted TFRecord.  
+This script takes as input fasta sequences for training and returns converted TFRecord (one-hot).  
 
 OPTIONS: 
    -i      Fasta file of training set
-   -v      Absolute path to the vocabulary file (path/to/tokens_merged_12mers.txt)
    -d      Absolute path of directory containing scripts (/path/to/DeepMicrobes/scripts)
    -o      Output name of converted TFRecord
    -s      (Optional) Number of sequences per file for splitting (default: 20480000)
-   -k      (Optional) k-mer length (default: 12)
 
 EXAMPLE:
-./tfrec_train_kmer.sh -i train.fa -v /path/to/vocab/tokens_merged_12mers.txt -d DeepMicrobes/scripts -o train.tfrec -s 20480000 -k 12
+./tfrec_train_onehot.sh -i train.fa -d DeepMicrobes/scripts -o train.tfrec -s 20480000
 EOF
 }
 
-
 input_fasta=
-vocab=
 script_dir=
 output_tfrec=
 split_seq=
-kmer=
 
 
-while getopts “i:v:d:o:s:k:” OPTION
+while getopts “i:d:o:s:” OPTION
 do
      case ${OPTION} in
          i)
              input_fasta=${OPTARG}
-             ;;
-         v)
-             vocab=${OPTARG}
              ;;
          d)
              script_dir=${OPTARG}
@@ -47,9 +39,6 @@ do
          s)
              split_seq=${OPTARG}
              ;; 
-         k)
-             kmer=${OPTARG}
-             ;;   
          ?)
              usage
              exit
@@ -58,7 +47,7 @@ do
 done
 
 
-if [[ -z ${input_fasta} ]] || [[ -z ${vocab} ]] || [[ -z ${script_dir} ]] || [[ -z ${output_tfrec} ]]
+if [[ -z ${input_fasta} ]] || [[ -z ${script_dir} ]] || [[ -z ${output_tfrec} ]]
 then
      echo "ERROR : Please supply required arguments"
      usage
@@ -66,7 +55,6 @@ then
 fi
 
 if [ -z ${split_seq} ]; then split_seq=20480000; fi
-if [ -z ${kmer} ]; then kmer=12; fi
 
 line=$( expr ${split_seq} \* 2 )
 
@@ -94,26 +82,21 @@ if [ ! -e ${input_fasta} ]; then
     exit 1
 fi
 
-if [ ! -e ${vocab} ]; then
-    echo "ERROR : Missing the vocabulary file!"
-	usage
-	exit 1
-fi
 
 if [ ! -d ${script_dir} ];then
-    echo "ERROR : Missing the dictionary containing seq2tfrec_kmer.py!"
+    echo "ERROR : Missing the dictionary containing seq2tfrec_onehot.py!"
     usage
     exit 1
 fi
 
-if [ ! -e ${script_dir}/seq2tfrec_kmer.py ]; then
-    echo "ERROR : Missing seq2tfrec_kmer.py!"
+if [ ! -e ${script_dir}/seq2tfrec_onehot.py ]; then
+    echo "ERROR : Missing seq2tfrec_onehot.py!"
 	usage
 	exit 1
 fi
 
 echo "Starting converting ${input_fasta} to TFRecord (mode=training), output will be saved in ${output_tfrec}"
-echo "Parameters: kmer=${kmer}, vocab_file=${vocab}, split_size=${split_seq}"
+echo "Parameters: split_size=${split_seq}"
 
 
 echo "======================================"
@@ -134,7 +117,7 @@ echo "======================================"
 echo "3. Converting to TFRecord..."
 ls subset* > tmp_fa_list
 
-cat tmp_fa_list | parallel python ${script_dir}/seq2tfrec_kmer.py --input_seq={} --output_tfrec={}.${kmer}mer.tfrec --vocab=${vocab} --kmer=${kmer}
+cat tmp_fa_list | parallel python ${script_dir}/seq2tfrec_onehot.py --input_seq={} --output_tfrec={}.onehot.tfrec --is_train=True --seq_type=fasta
 
 for fa in $(cat tmp_fa_list)
 do
@@ -150,7 +133,5 @@ cd ..
 rmdir tmp_tfrec_${input_fasta}
 
 echo "Finished."
-
-
 
 
