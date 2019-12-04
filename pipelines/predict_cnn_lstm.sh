@@ -5,7 +5,7 @@ usage()
 cat << EOF
 usage: $0 options
 
-This script make predictions using the model of CNN + LSTM. 
+This script makes predictions using the model of CNN + LSTM. 
 
 OPTIONS: 
    -i      TFRecord (one-hot) input containing interleaved paired-end reads

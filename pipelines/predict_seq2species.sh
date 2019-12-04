@@ -5,7 +5,7 @@ usage()
 cat << EOF
 usage: $0 options
 
-This script make predictions using the model of Seq2species. 
+This script makes predictions using the model of Seq2species. 
 
 OPTIONS: 
    -i      TFRecord (one-hot) input containing interleaved paired-end reads

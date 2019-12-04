@@ -5,7 +5,7 @@ usage()
 cat << EOF
 usage: $0 options
 
-This script make predictions using the model of Embed + LSTM. 
+This script makes predictions using the model of Embed + LSTM. 
 
 OPTIONS: 
    -i      TFRecord (k-mer) input containing interleaved paired-end reads
