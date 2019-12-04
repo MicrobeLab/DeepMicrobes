@@ -8,8 +8,8 @@ Supplementary data for the paper under preparation is available at https://githu
 
 * [Getting start with DeepMicrobes (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/example.md)
 * [How to install](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/install.md)
-* [How to convert fastq/fasta sequences to TFRecord](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/tfrec.md)
-* [How to make predictions on a metagenome dataset (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/prediction.md)
+* [How to convert fastq/fasta sequences to TFRecord](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/tfrecord.md)
+* [How to make predictions on a metagenome dataset](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/prediction.md)
 * [How to generate taxonomic profiles (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/profile.md)
 * [How to choose the confidence threshold (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/confidence.md)
 * [How to train the DNN model of DeepMicrobes (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/train.md)

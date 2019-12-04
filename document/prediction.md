@@ -1,6 +1,6 @@
 # How to make predictions on a metagenome dataset
 
-This tutorial assumes that fastq/fasta files have been converted to [TFRecord](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/tfrec.md).
+This tutorial assumes that fastq/fasta files have been converted to [TFRecord](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/tfrecord.md).
 
 To get a full list of all options for `DeepMicrobes.py`:
 
@@ -26,13 +26,14 @@ In these scripts we use the `--model_name` option to tell `DeepMicrobes.py` whic
 
 To make prediction on a metagenome dataset (referred to as `sample.tfrec`) using DeepMicrobes :
 ```sh
-predict_deepmicrobes.sh -i sample.tfrec -b ${batch_size} -l ${level} -p ${cpus} -m ${model_dir} -o ${output_prefix}
+predict_DeepMicrobes.sh -i sample.tfrec -b 8192 -l species -p 8 -m model_dir -o prefix -d /path/to/DeepMicrobes
 ```
 
 Arguments: <br>
 * `-i` TFRecord input containing interleaved paired-end reads <br>
-* `-m` The dictionary containing model weights (should match the taxonomic level) <br>
+* `-m` Dictionary containing model weights (should match the taxonomic level) <br>
 * `-o` Output prefix <br>
+* `-d` Dictionary containing the main script DeepMicrobes.py <br>
 * `-b` (Optional) Batch size (a multiple of 4) (default: 8192) <br>
 * `-l` (Optional) Taxonomic level, species/genus (should match the weights) (default: species) <br>
 * `-p` (Optional) Number of parallel calls for input preparation (default: 8) <br>
