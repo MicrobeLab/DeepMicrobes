@@ -102,8 +102,12 @@ fi
 
 echo "Filtering predictions using threshold ${threshold} (%) ..."
 
+awk -v var="$threshold" '$2>=var' ${input} > ${input}.filtered.txt
 
+echo "Summarizing predictions ..."
 
+python ${script_dir}/read_counter.py -i ${input}.filtered.txt -o ${output} -l ${label}
 
+rm ${input}.filtered.txt
 
-
+echo "Finished."
