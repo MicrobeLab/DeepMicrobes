@@ -33,6 +33,8 @@ The results of the species model were measured on simulated variable-length read
 | 100 | 0.994 | 0.001 |
 
 
+<br>
+
 ## Genus model of DeepMicrobes
 
 The results of the genus model were averaged over the ten mock communities.
