@@ -2,26 +2,61 @@
 
 This tutorial shows how to train the DNN model of DeeMicrobes from scratch. 
 
+<br>
+
 ## Obtain a training set
 
-Theoretically, the training set can be composed of any sequences, as long as you have a ground truth category label for each sequence.
+The training set can be composed of any sequences as long as you have a ground truth category label for each sequence. To train a species classifier for metagenome utilizing a collection of microbial genomes, you would need to first simulate sequencing reads from these genomes. <br>
 
-To train a species classifier for metagenome utilizing a collection of microbial genomes, you would need to first simulate sequencing reads from these genomes. <br>
-<b>For example, to prepare the training set for the gut model from the DeepMicrobes paper (under preparation):</b> <br>
-* 1. Download the genomes in the complete bacterial repertoire of the human gut microbiota from this [FTP site](ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/umgs_analyses). <br>
-* 2. Assign a category label for each species. <br>
-* 3. Read simulation with [ART](https://academic.oup.com/bioinformatics/article/28/4/593/213322) for each genome. <br>
-* 4. Trim reads to variable lengths with the custom script `random_trim.py`. <br>
-* 5. Shuffle all the reads and convert them to TFRecord. <br>
+<br>
 
-See below for details.
+<b>For example, to prepare the training set for the gut model from the DeepMicrobes paper (under preparation):</b> 
+* Download the genomes in the complete bacterial repertoire of the human gut microbiota from this [FTP site](ftp://ftp.ebi.ac.uk/pub/databases/metagenomics/umgs_analyses). <br>
+* Assign a category label for each species. <br>
+* Read simulation with [ART simulator](https://academic.oup.com/bioinformatics/article/28/4/593/213322) for each genome. <br>
+* Trim reads to variable lengths with the custom script `random_trim.py`. <br>
+* Shuffle all the reads and convert them to TFRecord. <br>
+
+See below for details. `random_trim.py` and `fna_label.py` can be found in [pipelines](https://github.com/MicrobeLab/DeepMicrobes/blob/master/pipelines).
+
+<br>
 
 ### Label assignment
 
-Each species should be assigned a non-redundant integer between `0` and `total number of species`. 
-Suppose we 100 categories, we should assign a non-redundant integer label between 0-99 to each category.
+Each category should be given a ground true label which is an integer between `0` and `num_classes-1`. <br>
+<b>E.g.</b>, Suppose we have 100 categories, we should assign a non-redundant integer label between 0-99 to each category. 
+
+Please provide a label file for `fna_label.py`. The script add a label prefix for each sequence in a fasta genome file. These labels will be carried to sequence identifiers of simulated reads using ART simulator. 
+
+The label file is a tab-delimited file which looks like:
+
+```
+genome_00.fna	0
+genome_01.fna	1
+genome_02.fna	2
+genome_03.fna	3
+genome_04.fna	4
+...
+genome_99.fna	99
+```
+
+The script `fna_label.py` output all the labeled fasta genome files in an user-specified dictionary. 
+
+```sh
+python fna_label.py -m /path/to/label_file.txt -o output_dir
+```
+Arguments:
+* `-m` Tabular file mapping from names of the genome files (can be full path) to integer labels <br>
+* `-o` Output dictionary
+
+The labeled genomes we used to train the species and genus model of DeepMicrobes are available [here](https://mail2sysueducn-my.sharepoint.com/:f:/g/personal/liangqx7_mail2_sysu_edu_cn/EjQtlY1EmuZOtrUsbPCy4rQBo5rHmprL-WzvHbqzNAWVlA?e=zILdlI).
+
+<br>
 
 ### Read simulation
+
+
+<br>
 
 ### TFRecord conversion
 

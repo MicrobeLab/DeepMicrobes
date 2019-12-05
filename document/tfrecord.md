@@ -33,7 +33,7 @@ The converted TFRecord will be stored in `train.tfrec` (or other specified names
 <br>
 <b>NOTE</b>: 
 * The script parses category labels from sequence IDs starting with `prefix|label` (e.g., >this_is_prefix|0).  <br>
-* Suppose we 100 categories, we should assign a non-redundant integer label between 0-99 to each category. <br>
+* Suppose we have 100 categories, we should assign a non-redundant integer label between 0-99 to each category. <br>
 * The label is taken as ground truth during training and not required during prediction. <br>
 * Each subset files are processed with one CPU core, so that the optimal number of sequences per file depends on how many CPU cores you have and the total number of reads as well. <br>
 * The vocabulary file and <i>k</i>-mer length should be matched.
