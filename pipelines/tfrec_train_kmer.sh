@@ -134,7 +134,10 @@ echo "======================================"
 echo "3. Converting to TFRecord..."
 ls subset* > tmp_fa_list
 
-cat tmp_fa_list | parallel python ${script_dir}/seq2tfrec_kmer.py --input_seq={} --output_tfrec={}.${kmer}mer.tfrec --vocab=${vocab} --kmer=${kmer}
+cat tmp_fa_list | parallel python ${script_dir}/seq2tfrec_kmer.py \
+	--input_seq={} --output_tfrec={}.${kmer}mer.tfrec \
+	--vocab=${vocab} --kmer=${kmer} \
+	--is_train=True
 
 for fa in $(cat tmp_fa_list)
 do

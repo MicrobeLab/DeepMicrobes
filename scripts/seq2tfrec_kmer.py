@@ -5,11 +5,12 @@ from __future__ import print_function
 import os
 import numpy as np
 from Bio import SeqIO
-from absl import app as absl_app
-from absl import flags
+#from absl import app as absl_app
+#from absl import flags
 import tensorflow as tf
+import argparse
 
-from utils.flags import core as flags_core
+#from utils.flags import core as flags_core
 
 
 def forward2reverse(dna):
@@ -154,7 +155,7 @@ def test_set_convert2tfrecord(input_seq, output_tfrec, kmer, vocab, seq_type):
                 writer.write(serialized)
 
 
-def main(unused_argv):
+def main_deprecation(unused_argv):
     # checking files: vocab, input_seq
     assert os.path.exists(FLAGS.vocab), (
         'Please provide the vocabulary file.')
@@ -171,7 +172,7 @@ def main(unused_argv):
                                   FLAGS.kmer, FLAGS.vocab, FLAGS.seq_type)
 
 
-def define_seq2tfrec_flags():
+def define_seq2tfrec_flags_deprecation():
     flags.DEFINE_string(
         name="input_seq", short_name="seq", default="/tmp/input.fasta",
         help=flags_core.help_wrap(
@@ -196,11 +197,46 @@ def define_seq2tfrec_flags():
         name="is_train", default=True,
         help=flags_core.help_wrap(
             "Whether processing training/eval set (default True)"))
+            
+            
+def main():
+	
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--input_seq', help="Path to input reads")
+    parser.add_argument('--output_tfrec', help="Path to output tfrecord")
+    parser.add_argument('--vocab', help="Path to the vocabulary file")
+    parser.add_argument('--is_train', default=False, help='mode (default False)')
+    parser.add_argument('--seq_type', default='fasta', help='fasta/fastq (default fasta)')
+    parser.add_argument('--kmer', default=12, help="The size of k for reads splitting (default 12)")
+    
+    args = parser.parse_args()
+    input_seq = args.input_seq
+    output_tfrecord = args.output_tfrec
+    is_train = args.is_train
+    seq_type = args.seq_type
+    vocab = args.vocab
+    kmer = args.kmer
+    
+    # checking files: vocab, input_seq
+    assert os.path.exists(vocab), (
+        'Please provide the vocabulary file.')
+    assert os.path.exists(input_seq), (
+        'Please provide input fasta or fastq.')
+
+    if FLAGS.is_train:
+        tf.logging.info("Processing training/eval set")
+        training_set_convert2tfrecord(input_seq, output_tfrec, kmer, vocab, seq_type)
+    else:
+        tf.logging.info("Processing test set")
+        test_set_convert2tfrecord(input_seq, output_tfrec, kmer, vocab, seq_type)
+    return
+
 
 
 if __name__ == "__main__":
     tf.logging.set_verbosity(tf.logging.INFO)
-    define_seq2tfrec_flags()
-    FLAGS = flags.FLAGS
-    absl_app.run(main)
+    #define_seq2tfrec_flags()
+    #FLAGS = flags.FLAGS
+    #absl_app.run(main)
+    main()
 
