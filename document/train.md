@@ -111,7 +111,7 @@ python /path/to/DeepMicrobes.py --helpfull
 
 
 | vocabulary filename | vocab_size |
-| - | - |
+| :-: | :-: |
 | tokens_merged_12mers.txt | 8390658 |
 | tokens_merged_11mers.txt | 2097154 |
 | tokens_merged_10mers.txt | 524802 |
