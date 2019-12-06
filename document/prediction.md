@@ -2,7 +2,7 @@
 
 This tutorial assumes that fastq/fasta files have been converted to [TFRecord](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/tfrecord.md).
 
-To get a full list of all options for `DeepMicrobes.py`:
+To get a full list of options for `DeepMicrobes.py`:
 
 ```sh
 python /path/to/DeepMicrobes.py --helpfull
