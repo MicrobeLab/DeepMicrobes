@@ -85,7 +85,7 @@ else
 	exit 1
 fi
 
-if [ $(( ${batch_size} % 4 != 0)) 
+if [ $(( ${batch_size} % 4 != 0)) ]
 then
 	echo "ERROR: Batch size must a multiple of 4 for paired-end data"
 	exit 1

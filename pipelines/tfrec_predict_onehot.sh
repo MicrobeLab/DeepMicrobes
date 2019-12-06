@@ -67,10 +67,10 @@ fi
 if [ -z ${split_seq} ]; then split_seq=4000000; fi
 if [ -z ${seq_type} ]; then seq_type=fastq; fi
 
-if [ "$seq_type" = fastq] 
+if [ "$seq_type" = fastq ] 
 then 
 	line=$( expr ${split_seq} \* 4 )
-elif [ "$seq_type" = fasta] 
+elif [ "$seq_type" = fasta ] 
 then
 	line=$( expr ${split_seq} \* 2 )
 else
@@ -80,7 +80,7 @@ else
 fi
 
 
-if [ $(( ${split_seq} % 4 != 0)) 
+if [ $(( ${split_seq} % 4 != 0)) ]
 then
 	echo "ERROR: The number of sequences per file must a multiple of 4 for paired-end data"
 	exit 1
