@@ -80,11 +80,14 @@ else
 fi
 
 
-if [ $(( ${split_seq} % 4 != 0)) ]
+fragment_num=$(( ${split_seq} % 4 ))
+
+if [ ${fragment_num} != 0 ]
 then
 	echo "ERROR: The number of sequences per file must a multiple of 4 for paired-end data"
 	exit 1
 fi
+
 
 
 if [ -x "$(command -v parallel)" ];

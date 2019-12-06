@@ -85,7 +85,9 @@ else
 	exit 1
 fi
 
-if [ $(( ${batch_size} % 4 != 0)) ]
+fragment_num=$(( ${batch_size} % 4 ))
+
+if [ ${fragment_num} != 0 ]
 then
 	echo "ERROR: Batch size must a multiple of 4 for paired-end data"
 	exit 1

@@ -68,7 +68,9 @@ fi
 if [ -z ${batch_size} ]; then batch_size=8192; fi
 if [ -z ${cpu} ]; then cpu=8; fi
 
-if [ $(( ${batch_size} % 4 != 0)) ]
+fragment_num=$(( ${batch_size} % 4 ))
+
+if [ ${fragment_num} != 0 ]
 then
 	echo "ERROR: Batch size must a multiple of 4 for paired-end data"
 	exit 1
