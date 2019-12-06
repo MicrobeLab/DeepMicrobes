@@ -182,7 +182,7 @@ ls subset* > tmp_${seq_type}_list
 cat tmp_${seq_type}_list | parallel python ${script_dir}/seq2tfrec_kmer.py \
 	--input_seq={} --output_tfrec={}.${kmer}mer.tfrec \
 	--vocab=${vocab} --kmer=${kmer} \
-	--is_train=False --seq_type=${seq_type}
+	--seq_type=${seq_type}
 	
 for seq in $(cat tmp_${seq_type}_list)
 do

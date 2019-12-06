@@ -205,13 +205,13 @@ def main():
     parser.add_argument('--input_seq', help="Path to input reads")
     parser.add_argument('--output_tfrec', help="Path to output tfrecord")
     parser.add_argument('--vocab', help="Path to the vocabulary file")
-    parser.add_argument('--is_train', default=False, help='mode (default False)')
+    parser.add_argument('--is_train', default=False, type=bool, help='mode (default False)')
     parser.add_argument('--seq_type', default='fasta', help='fasta/fastq (default fasta)')
-    parser.add_argument('--kmer', default=12, help="The size of k for reads splitting (default 12)")
+    parser.add_argument('--kmer', default=12, type=int, help="The size of k for reads splitting (default 12)")
     
     args = parser.parse_args()
     input_seq = args.input_seq
-    output_tfrecord = args.output_tfrec
+    output_tfrec = args.output_tfrec
     is_train = args.is_train
     seq_type = args.seq_type
     vocab = args.vocab
@@ -223,7 +223,7 @@ def main():
     assert os.path.exists(input_seq), (
         'Please provide input fasta or fastq.')
 
-    if FLAGS.is_train:
+    if is_train:
         tf.logging.info("Processing training/eval set")
         training_set_convert2tfrecord(input_seq, output_tfrec, kmer, vocab, seq_type)
     else:
