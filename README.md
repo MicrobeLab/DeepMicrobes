@@ -12,7 +12,7 @@ Supplementary data for the paper under preparation is available at https://githu
 * [How to make predictions on a metagenome dataset](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/prediction.md)
 * [How to generate taxonomic profiles](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/profile.md)
 * [How to choose the confidence threshold](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/confidence.md)
-* [How to train the DNN model of DeepMicrobes (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/train.md)
+* [How to train the DNN model of DeepMicrobes](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/train.md)
 * [How to submit to GPUs (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/train.md)
 * [Suggestions on training a custom model (for advanced users) (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/custom.md)
 

@@ -2,6 +2,7 @@
 
 This tutorial shows how to train the DNN model of DeeMicrobes from scratch. 
 
+<br>
 
 ## Obtain a training set
 
@@ -73,6 +74,7 @@ The example command line above trims the 150bp reads from 3'end to 75-150bp.
 
 Please refer to the [TFRecord tutorial](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/tfrecord.md).
 
+<br>
 
 ## Train a deep neural network
 
@@ -89,9 +91,11 @@ Arguments:
 * `num_classes` Number of classes [2505] <br>
 * `kmer` K-mer length [12] <br>
 * `keep_prob` Keep probability for dropout [1.0] <br>
-* `vocab_size` Number of k-mers in the vocabulary file [8390658] <br>
+* `vocab_size` Number of k-mers in the vocabulary file plus one [8390658] <br>
 * `cpus` Number of parallel calls for input preparation [8] <br>
-* 
+* `train_epochs` Number of epochs used to train [1] <br>
+* `lr_decay` Learning rate decay [0.05] <br>
+* `lr` Learning rate [0.001] <br>
 
 
 To get a full list of training options for `DeepMicrobes.py`:
@@ -103,5 +107,14 @@ python /path/to/DeepMicrobes.py --helpfull
 
 <b>Note</b>: 
 * Recommended batch size for training on thousands of species is 2048 or 4096. Try a lower value when training on fewer classes. 
-* `vocab_size` should match `kmer`. See the table below for `vocab_size` of the provided vocabulary files.
+* `vocab_size` should match `kmer`. See the table below for `vocab_size` of the [provided vocabulary files](https://github.com/MicrobeLab/DeepMicrobes-data/tree/master/vocabulary).
+
+
+| vocabulary filename | vocab_size |
+| - | - |
+| tokens_merged_12mers.txt | 8390658 |
+| tokens_merged_11mers.txt | 2097154 |
+| tokens_merged_10mers.txt | 524802 |
+| tokens_merged_9mers.txt | 131074 |
+| tokens_merged_8mers.txt | 32898 |
 
