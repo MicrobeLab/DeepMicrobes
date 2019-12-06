@@ -14,7 +14,7 @@ Supplementary data for the paper under preparation is available at https://githu
 * [How to choose the confidence threshold](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/confidence.md)
 * [How to train the DNN model of DeepMicrobes](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/train.md)
 * [How to submit to GPUs](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/gpu.md)
-* [Suggestions on training a custom model (for advanced users) (working on)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/custom.md)
+* [Suggestions on training a custom model (for advanced users)](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/custom.md)
 
 
 
