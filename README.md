@@ -2,7 +2,7 @@
 
 DeepMicrobes: taxonomic classification for metagenomics with deep learning <br>
 Supplementary data for the paper under preparation is available at https://github.com/MicrobeLab/DeepMicrobes-data <br>
-<b>IMPORTANT: A new version of DeepMicrobes will be released this week (before Dec. 8) and the document is being edited frequently. </b>
+<b>IMPORTANT: The new DeepMicrobes (beta version) is available now. Please feel free to contact us if you have any suggestions or encounter any errors.</b>
 
 ## Usage
 
