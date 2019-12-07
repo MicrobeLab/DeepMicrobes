@@ -73,10 +73,10 @@ if [ -z ${batch_size} ]; then batch_size=8192; fi
 if [ -z ${level} ]; then level=species; fi
 if [ -z ${cpu} ]; then cpu=8; fi
 
-if [ "$level" = species] 
+if [ "$level" = species ] 
 then 
 	num_classes=2505
-elif [ "$level" = genus] 
+elif [ "$level" = genus ] 
 then
 	num_classes=120
 else
@@ -141,6 +141,5 @@ python ${main_dir}/DeepMicrobes.py \
 paste ${output_prefix}.category_paired.txt ${output_prefix}.prob_paired.txt > ${output_prefix}.result.txt
 rm ${output_prefix}.category_paired.txt ${output_prefix}.prob_paired.txt
 
-echo "Prediction finished ..."
 echo "Result: ${output_prefix}.result.txt"
 

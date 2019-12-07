@@ -62,18 +62,19 @@ fi
 
 if [ -z ${threshold} ]; then threshold=50; fi
 
-if [[ ${threshold} > 100 ]] || [[ ${threshold} < 0 ]]
+if [[ ${threshold} -gt 100 ]] || [[ ${threshold} -lt 0 ]]
 then
 	echo "ERROR : Confidence threshold (%) should between 0 and 100"
 	usage
 	exit 1
 fi
 
-if [[ ${threshold} < 1 ]] && [[ ${threshold} > 0 ]]
-then
-	echo "WARNING : Confidence threshold (%) should be percentage between 0 and 100"
-	usage
+if [[ 1 -eq "$(echo "${threshold} < 1" | bc)" ]] && [[ 1 -eq "$(echo "${threshold} > 0" | bc)" ]]
+then  
+    echo "WARNING : Confidence threshold (%) should be percentage between 0 and 100"
+    usage
 fi
+
 
 if [ ! -e ${input} ]; then
     echo "ERROR : Input prediction result not found"
