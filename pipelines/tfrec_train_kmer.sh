@@ -10,26 +10,24 @@ This script takes as input fasta sequences for training and returns converted TF
 OPTIONS: 
    -i      Fasta file of training set
    -v      Absolute path to the vocabulary file (path/to/tokens_merged_12mers.txt)
-   -d      Absolute path of directory containing scripts (/path/to/DeepMicrobes/scripts)
    -o      Output name of converted TFRecord
    -s      (Optional) Number of sequences per file for splitting (default: 20480000)
    -k      (Optional) k-mer length (default: 12)
 
 EXAMPLE:
-./tfrec_train_kmer.sh -i train.fa -v /path/to/vocab/tokens_merged_12mers.txt -d DeepMicrobes/scripts -o train.tfrec -s 20480000 -k 12
+./tfrec_train_kmer.sh -i train.fa -v /path/to/vocab/tokens_merged_12mers.txt -o train.tfrec -s 20480000 -k 12
 EOF
 }
 
 
 input_fasta=
 vocab=
-script_dir=
 output_tfrec=
 split_seq=
 kmer=
 
 
-while getopts “i:v:d:o:s:k:” OPTION
+while getopts “i:v:o:s:k:” OPTION
 do
      case ${OPTION} in
          i)
@@ -37,9 +35,6 @@ do
              ;;
          v)
              vocab=${OPTARG}
-             ;;
-         d)
-             script_dir=${OPTARG}
              ;;
          o)
              output_tfrec=${OPTARG}
@@ -58,7 +53,7 @@ do
 done
 
 
-if [[ -z ${input_fasta} ]] || [[ -z ${vocab} ]] || [[ -z ${script_dir} ]] || [[ -z ${output_tfrec} ]]
+if [[ -z ${input_fasta} ]] || [[ -z ${vocab} ]] || [[ -z ${output_tfrec} ]]
 then
      echo "ERROR : Please supply required arguments"
      usage
@@ -100,15 +95,8 @@ if [ ! -e ${vocab} ]; then
 	exit 1
 fi
 
-if [ ! -d ${script_dir} ];then
-    echo "ERROR : Missing the dictionary containing seq2tfrec_kmer.py!"
-    usage
-    exit 1
-fi
-
-if [ ! -e ${script_dir}/seq2tfrec_kmer.py ]; then
-    echo "ERROR : Missing seq2tfrec_kmer.py!"
-	usage
+if [ ! -x "$(command -v seq2tfrec_kmer.py)" ]; then
+    echo "ERROR: Please add /path/to/DeepMicrobes/scripts dictionary to path"
 	exit 1
 fi
 
@@ -134,7 +122,7 @@ echo "======================================"
 echo "3. Converting to TFRecord..."
 ls subset* > tmp_fa_list
 
-cat tmp_fa_list | parallel python ${script_dir}/seq2tfrec_kmer.py \
+cat tmp_fa_list | parallel seq2tfrec_kmer.py \
 	--input_seq={} --output_tfrec={}.${kmer}mer.tfrec \
 	--vocab=${vocab} --kmer=${kmer} \
 	--is_train=True

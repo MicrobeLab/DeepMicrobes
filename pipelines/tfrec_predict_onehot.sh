@@ -10,25 +10,23 @@ This script takes as input fastq/fasta sequences for prediction and returns conv
 OPTIONS: 
    -f      Fastq/fasta file of forward reads
    -r      Fastq/fasta file of reverse reads
-   -d      Absolute path of directory containing scripts (/path/to/DeepMicrobes/scripts)
    -o      Output name prefix
    -s      (Optional) Number of sequences per file for splitting (default: 4000000)
    -t      (Optional) Sequence type fastq/fasta (default: fastq)
 
 EXAMPLE:
-./tfrec_predict_onehot.sh -f sample_R1.fastq -r sample_R2.fastq -t fastq -d /path/to/DeepMicrobes/scripts -o sample_name -s 4000000 
+./tfrec_predict_onehot.sh -f sample_R1.fastq -r sample_R2.fastq -t fastq -o sample_name -s 4000000 
 EOF
 }
 
 forward=
 reverse=
-script_dir=
 output_name=
 split_seq=
 seq_type=
 
 
-while getopts “f:r:d:o:s:t:” OPTION
+while getopts “f:r:o:s:t:” OPTION
 do
      case ${OPTION} in
          f)
@@ -36,9 +34,6 @@ do
              ;;
          r)
              reverse=${OPTARG}
-             ;;
-         d)
-             script_dir=${OPTARG}
              ;;
          o)
              output_name=${OPTARG}
@@ -57,7 +52,7 @@ do
 done
 
 
-if [[ -z ${forward} ]] || [[ -z ${reverse} ]] || [[ -z ${script_dir} ]] || [[ -z ${output_name} ]]
+if [[ -z ${forward} ]] || [[ -z ${reverse} ]] || [[ -z ${output_name} ]]
 then
 	echo "ERROR : Please supply required arguments"
 	usage
@@ -120,15 +115,8 @@ if [ ! -e ${reverse} ]; then
 fi
 
 
-if [ ! -d ${script_dir} ];then
-    echo "ERROR : Missing the dictionary containing seq2tfrec_onehot.py!"
-    usage
-    exit 1
-fi
-
-if [ ! -e ${script_dir}/seq2tfrec_onehot.py ]; then
-    echo "ERROR : Missing seq2tfrec_onehot.py!"
-	usage
+if [ ! -x "$(command -v seq2tfrec_onehot.py)" ]; then
+    echo "ERROR : Please add /path/to/DeepMicrobes/scripts dictionary to path"
 	exit 1
 fi
 
@@ -165,7 +153,7 @@ echo "======================================"
 echo "3. Converting to TFRecord..."
 ls subset* > tmp_${seq_type}_list
 
-cat tmp_${seq_type}_list | parallel python ${script_dir}/seq2tfrec_onehot.py --input_seq={} --output_tfrec={}.onehot.tfrec --is_train=False --seq_type=${seq_type}
+cat tmp_${seq_type}_list | parallel seq2tfrec_onehot.py --input_seq={} --output_tfrec={}.onehot.tfrec --is_train=False --seq_type=${seq_type}
 
 for seq in $(cat tmp_${seq_type}_list)
 do

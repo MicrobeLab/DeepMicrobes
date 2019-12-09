@@ -39,7 +39,6 @@ tfrec_predict_kmer.sh \
 	-r /path/to/SRR5935743_clean_2.fastq \
 	-t fastq \
 	-v /path/to/vocab/tokens_merged_12mers.txt \
-	-d /path/to/DeepMicrobes/scripts \
 	-o SRR5935743 \
 	-s 4000000 \
 	-k 12
@@ -56,8 +55,7 @@ predict_DeepMicrobes.sh \
 	-l species \
 	-p 8 \
 	-m /path/to/weights_species \
-	-o SRR5935743 \
-	-d /path/to/DeepMicrobes
+	-o SRR5935743 
 ```
 
 Try a smaller batch size (-b) if you encounter out-of-memory error. Be sure to set the value to a multiple of 4.
@@ -71,8 +69,7 @@ report_profile.sh \
 	-i SRR5935743.result.txt \
 	-o SRR5935743.profile.txt \
 	-t 50 \
-	-l /path/to/DeepMicrobes/data/name2label_species.txt \
-	-d /path/to/DeepMicrobes/scripts
+	-l /path/to/DeepMicrobes/data/name2label_species.txt 
 ```
 
 The output `SRR5935743.profile.txt` is a tabular file showing the number of reads assigned to each species. 

@@ -41,7 +41,7 @@ genome_99.fna	99
 The script `fna_label.py` output all the labeled fasta genome files in an user-specified dictionary. 
 
 ```sh
-python fna_label.py -m /path/to/label_file.txt -o output_dir
+fna_label.py -m /path/to/label_file.txt -o output_dir
 ```
 Arguments:
 * `-m` Tabular file mapping from names of the genome files (can be full path) to integer labels <br>
@@ -57,7 +57,7 @@ We recommend generating equal proportion of reads for each category. Next-genera
 To trim the simulated reads to variable lengths:
 
 ```sh
-python random_trim.py -i input_fastq -o output_fasta -f fastq -l 150 -min 0 -max 75
+random_trim.py -i input_fastq -o output_fasta -f fastq -l 150 -min 0 -max 75
 ```
 Arguments:  
 * `-i` input fastq/fasta sequences (fixed-length) <br>
@@ -81,7 +81,7 @@ Please refer to the [TFRecord tutorial](https://github.com/MicrobeLab/DeepMicrob
 To train a DNN model for DeepMicrobes:
 
 ```sh
-python /path/to/DeepMicrobes.py --input_tfrec=train.tfrec --model_name=attention --model_dir=/path/to/weights
+DeepMicrobes.py --input_tfrec=train.tfrec --model_name=attention --model_dir=/path/to/weights
 ```
 Arguments:
 * `input_tfrec` TFRecord containing sequences and their labels <br>
@@ -101,7 +101,7 @@ Arguments:
 To get a full list of training options for `DeepMicrobes.py`:
 
 ```sh
-python /path/to/DeepMicrobes.py --helpfull
+DeepMicrobes.py --helpfull
 ```
 
 

@@ -122,12 +122,14 @@ The vocabulary file can be stored in any dictionary (hereafter referred to as `/
 
 <br>
 
-## 6. Add wrapper scripts to path
+## 6. Add scripts to path
 
-The `pipelines` dictionary contains wrapper scripts for TFRecord conversion, model training, and classification. 
+The `pipelines` dictionary contains wrapper shell scripts for TFRecord conversion, model training, and classification. 
 
 ```sh
 export PATH=/path/to/DeepMicrobes/pipelines:$PATH
+export PATH=/path/to/DeepMicrobes/scripts:$PATH
+export PATH=/path/to/DeepMicrobes:$PATH
 ```
 
 

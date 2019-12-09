@@ -11,12 +11,11 @@ OPTIONS:
    -i      TFRecord (one-hot) input containing interleaved paired-end reads
    -m      Dictionary containing model weights
    -o      Output prefix
-   -d      Dictionary containing the main script DeepMicrobes.py
    -b      (Optional) Batch size (a multiple of 4) (default: 8192)
    -p      (Optional) Number of parallel calls for input preparation (default: 8)
 
 EXAMPLE:
-./predict_seq2species.sh -i sample.tfrec -b 8192 -p 8 -m model_dir -o prefix -d /path/to/DeepMicrobes
+./predict_seq2species.sh -i sample.tfrec -b 8192 -p 8 -m model_dir -o prefix 
 EOF
 }
 
@@ -24,12 +23,11 @@ EOF
 input=
 model_dir=
 output_prefix=
-main_dir=
 batch_size=
 cpu=
 
 
-while getopts “i:m:o:d:b:p:” OPTION
+while getopts “i:m:o:b:p:” OPTION
 do
      case ${OPTION} in
          i)
@@ -40,9 +38,6 @@ do
              ;;
          o)
              output_prefix=${OPTARG}
-             ;;
-         d)
-             main_dir=${OPTARG}
              ;;
          b)
              batch_size=${OPTARG}
@@ -58,7 +53,7 @@ do
 done
 
 
-if [[ -z ${input} ]] || [[ -z ${model_dir} ]] || [[ -z ${output_prefix} ]] || [[ -z ${main_dir} ]]
+if [[ -z ${input} ]] || [[ -z ${model_dir} ]] || [[ -z ${output_prefix} ]] 
 then
 	echo "ERROR : Please supply required arguments"
 	usage
@@ -95,23 +90,18 @@ then
 	exit 1
 fi
 
-if [ ! -d ${main_dir} ];then
-    echo "ERROR : Dictionary containing DeepMicrobes.py not found"
-    usage
-    exit 1
-fi
 
-if [[ ! -e ${main_dir}/DeepMicrobes.py ]] 
+if [[ ! -x "$(command -v DeepMicrobes.py)" ]] 
 then
-	echo "ERROR : DeepMicrobes.py not found in ${main_dir}"
-	usage
+	echo "ERROR : Please add /path/to/DeepMicrobes dictionary to path"
 	exit 1
 fi
 
 
+
 echo "Prediction started ..."
 
-python ${main_dir}/DeepMicrobes.py \
+DeepMicrobes.py \
 	--batch_size=${batch_size} --num_classes=2505 \
 	--model_name=seq2species --encode_method=one_hot \
 	--model_dir=${model_dir} \
@@ -124,7 +114,4 @@ python ${main_dir}/DeepMicrobes.py \
 paste ${output_prefix}.category_paired.txt ${output_prefix}.prob_paired.txt > ${output_prefix}.result.txt
 rm ${output_prefix}.category_paired.txt ${output_prefix}.prob_paired.txt
 
-echo "Prediction finished ..."
 echo "Result: ${output_prefix}.result.txt"
-
-

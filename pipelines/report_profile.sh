@@ -12,10 +12,9 @@ OPTIONS:
    -o      Output report
    -t      (Optional) Threshold for confidence score in percentage % (default: 50)
    -l      Tab-delimited file mapping from species/genus name to category label
-   -d      Absolute path of directory containing scripts (/path/to/DeepMicrobes/scripts)
 
 EXAMPLE:
-./report_profile.sh -i predict.result.txt -o summarize.profile.txt -t 50 -l /path/to/DeepMicrobes/data/name2label.txt -d /path/to/DeepMicrobes/scripts
+./report_profile.sh -i predict.result.txt -o summarize.profile.txt -t 50 -l /path/to/DeepMicrobes/data/name2label.txt 
 EOF
 }
 
@@ -24,10 +23,9 @@ input=
 output=
 threshold=
 label=
-script_dir=
 
 
-while getopts “i:o:t:l:d:” OPTION
+while getopts “i:o:t:l:” OPTION
 do
      case ${OPTION} in
          i)
@@ -42,9 +40,6 @@ do
          l)
              label=${OPTARG}
              ;;
-         d)
-             script_dir=${OPTARG}
-             ;;
          ?)
              usage
              exit
@@ -53,7 +48,7 @@ do
 done
 
 
-if [[ -z ${input} ]] || [[ -z ${output} ]] || [[ -z ${label} ]] || [[ -z ${script_dir} ]] 
+if [[ -z ${input} ]] || [[ -z ${output} ]] || [[ -z ${label} ]]
 then
 	echo "ERROR : Please supply required arguments"
 	usage
@@ -88,15 +83,9 @@ if [ ! -e ${label} ]; then
     exit 1
 fi
 
-if [ ! -d ${script_dir} ];then
-    echo "ERROR : Dictionary of script not found"
-    usage
-    exit 1
-fi
 
-if [ ! -e ${script_dir}/read_counter.py ]; then
-    echo "ERROR : read_counter.py not found in ${script_dir}"
-	usage
+if [ ! -x "$(command -v read_counter.py)" ]; then
+    echo "ERROR: Please add /path/to/DeepMicrobes/scripts dictionary to path"
 	exit 1
 fi
 
@@ -107,7 +96,7 @@ awk -v var="$threshold" '$2>=var' ${input} > ${input}.filtered.txt
 
 echo "Summarizing predictions ..."
 
-python ${script_dir}/read_counter.py -i ${input}.filtered.txt -o ${output} -l ${label}
+read_counter.py -i ${input}.filtered.txt -o ${output} -l ${label}
 
 rm ${input}.filtered.txt
 

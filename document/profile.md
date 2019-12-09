@@ -5,14 +5,13 @@ In this tutorial we show how to summarize [read-level predictions](https://githu
 The wrapper script `report_profile.sh` can be found in [pipelines](https://github.com/MicrobeLab/DeepMicrobes/tree/master/pipelines).
 
 ```sh
-report_profile.sh -i predict.result.txt -o summarize.profile.txt -t 50 -l /path/to/DeepMicrobes/data/name2label.txt -d /path/to/DeepMicrobes/scripts
+report_profile.sh -i predict.result.txt -o summarize.profile.txt -t 50 -l /path/to/DeepMicrobes/data/name2label.txt 
 ```
 Arguments: <br>
 * `-i` Input prediction result
 * `-o` Output report
 * `-t` (Optional) Threshold for confidence score in percentage % (default: 50)
 * `-l` Tab-delimited file mapping from species/genus name to category label
-* `-d` Absolute path of directory containing scripts (/path/to/DeepMicrobes/scripts)
 
 `name2label_species.txt` and `name2label_genus.txt` are available in [data](https://github.com/MicrobeLab/DeepMicrobes/tree/master/data).
 

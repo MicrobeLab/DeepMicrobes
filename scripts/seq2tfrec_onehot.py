@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from Bio import SeqIO
 import numpy as np
 import tensorflow as tf
