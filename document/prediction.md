@@ -10,17 +10,18 @@ DeepMicrobes.py --helpfull
 
 The shell scripts used to make predictions with all tested DNNs in the paper can be found in [pipelines](https://github.com/MicrobeLab/DeepMicrobes/tree/master/pipelines). 
 In these scripts we use the `--model_name` option to tell `DeepMicrobes.py` which DNN architecture we would like to use. <br>
+The scripts of models called by `DeepMicrobes.py` are indicated in square brackets below.
 
 <b>The final best DNN:</b>
-* `attention`: Embed + LSTM + Attention (DeepMicrobes)
+* `attention`: Embed + LSTM + Attention (DeepMicrobes) [./models/embed_lstm_attention.py]
 
 <b>Other tested DNNs:</b>
-* `deep_cnn`: ResNet-like CNN
-* `cnn_lstm`: CNN + LSTM
-* `seq2species`: Seq2species
-* `embed_pool`: Embed + Pool
-* `embed_cnn`: Embed + CNN
-* `embed_lstm`: Embed + LSTM
+* `deep_cnn`: ResNet-like CNN [./models/resnet_cnn.py]
+* `cnn_lstm`: CNN + LSTM [./models/cnn_lstm.py]
+* `seq2species`: Seq2species [./models/seq2species.py]
+* `embed_pool`: Embed + Pool [./models/embed_pool.py]
+* `embed_cnn`: Embed + CNN [./models/embed_cnn.py]
+* `embed_lstm`: Embed + LSTM [./models/embed_lstm.py]
 
 ## Classifying reads using DeepMicrobes
 

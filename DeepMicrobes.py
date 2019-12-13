@@ -32,14 +32,14 @@ from utils.logs import logger
 
 
 def config(model_name, params):
-    if model_name == 'embed_pool':
+    if model_name == 'embed_pool':  # Embed + Pool
         model = embed_pool.EmbedPool(num_classes=params['num_classes'],
                                      vocab_size=params['vocab_size'],
                                      embedding_dim=params['embedding_dim'],
                                      mlp_dim=params['mlp_dim'],
                                      kmer=params['kmer'],
                                      max_len=params['max_len'])
-    elif model_name == 'embed_cnn':
+    elif model_name == 'embed_cnn':  # Embed + CNN
         model = embed_cnn.EmbedCNN(num_classes=params['num_classes'],
                                    vocab_size=params['vocab_size'],
                                    embedding_dim=params['embedding_dim'],
@@ -48,7 +48,7 @@ def config(model_name, params):
                                    cnn_num_filters=params['cnn_num_filters'],
                                    kmer=params['kmer'],
                                    max_len=params['max_len'])
-    elif model_name == 'embed_cnn_no_pool':
+    elif model_name == 'embed_cnn_no_pool':  # deprecated due to lower performance than embed_cnn
         model = embed_cnn.EmbedCNNnoPool(num_classes=params['num_classes'],
                                          vocab_size=params['vocab_size'],
                                          embedding_dim=params['embedding_dim'],
@@ -57,7 +57,7 @@ def config(model_name, params):
                                          cnn_num_filters=params['cnn_num_filters'],
                                          kmer=params['kmer'],
                                          max_len=params['max_len'])
-    elif model_name == 'embed_lstm':
+    elif model_name == 'embed_lstm':  # Embed + LSTM
         model = embed_lstm.EmbedLSTM(num_classes=params['num_classes'],
                                      vocab_size=params['vocab_size'],
                                      embedding_dim=params['embedding_dim'],
@@ -66,25 +66,25 @@ def config(model_name, params):
                                      pooling_type=params['pooling_type'],
                                      kmer=params['kmer'],
                                      max_len=params['max_len'])
-    elif model_name == 'cnn_lstm':
+    elif model_name == 'cnn_lstm':  # CNN + LSTM
         model = cnn_lstm.ConvLSTM(num_classes=params['num_classes'],
                                   max_len=params['max_len'])
-    elif model_name == 'cnn_2lstm':
+    elif model_name == 'cnn_2lstm':  # deprecated due to lower performance than cnn_lstm
         model = cnn_lstm.Conv2LSTM(num_classes=params['num_classes'],
                                    max_len=params['max_len'])
-    elif model_name == 'deep_cnn':
+    elif model_name == 'deep_cnn':  # ResNet-like CNN
         model = resnet_cnn.DeepCNN(num_classes=params['num_classes'],
                                    max_len=params['max_len'])
-    elif model_name == 'deep_cnn_13layer':
+    elif model_name == 'deep_cnn_13layer':  # deprecated due to lower performance than deep_cnn
         model = resnet_cnn.DeepCNN13(num_classes=params['num_classes'],
                                      max_len=params['max_len'])
-    elif model_name == 'deep_cnn_9layer':
+    elif model_name == 'deep_cnn_9layer':  # deprecated due to lower performance than deep_cnn
         model = resnet_cnn.DeepCNN9(num_classes=params['num_classes'],
                                     max_len=params['max_len'])
-    elif model_name == 'seq2species':
+    elif model_name == 'seq2species':  # Seq2species 
         model = seq2species.Seq2species(num_classes=params['num_classes'],
                                         max_len=params['max_len'])
-    else:
+    else:  # the best performing model, DeepMicrobes, Embed + LSTM + Attention
         model = embed_lstm_attention.EmbedAttention(num_classes=params['num_classes'],
                                                     vocab_size=params['vocab_size'],
                                                     embedding_dim=params['embedding_dim'],
