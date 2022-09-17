@@ -6,7 +6,6 @@ Supplementary data for the paper is available at https://github.com/MicrobeLab/D
 
 ## Usage
 
-* [Getting start with DeepMicrobes](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/example.md)
 * [How to install](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/install.md)
 * [How to convert fastq/fasta sequences to TFRecord](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/tfrecord.md)
 * [How to make predictions on a metagenome dataset](https://github.com/MicrobeLab/DeepMicrobes/blob/master/document/prediction.md)
